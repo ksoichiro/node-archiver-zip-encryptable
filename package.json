@@ -1,0 +1,39 @@
+{
+  "name": "archiver-zip-encryptable",
+  "version": "0.0.1",
+  "description": "An extension for archiver to zip with password encryption.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ksoichiro/node-archiver-zip-encryptable.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ksoichiro/node-archiver-zip-encryptable/issues"
+  },
+  "main": "index.js",
+  "author": {
+    "name": "Soichiro Kashima",
+    "email": "soichiro.kashima@gmail.com",
+    "url": "https://github.com/ksoichiro"
+  },
+  "files": [
+    "index.js",
+    "lib"
+  ],
+  "keywords": [
+    "zip",
+    "archive",
+    "encryption",
+    "password"
+  ],
+  "dependencies": {
+    "archiver": "^3.0.0",
+    "node-int64": "^0.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.9.0"
+  },
+  "scripts": {
+    "test": "eslint **/*.js"
+  }
+}
