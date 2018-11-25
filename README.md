@@ -4,6 +4,7 @@
 
 [![Build Status](https://travis-ci.org/ksoichiro/node-archiver-zip-encryptable.svg?branch=master)](https://travis-ci.org/ksoichiro/node-archiver-zip-encryptable)
 
+This extension adds some formats to handle encryption to [archiver](https://github.com/archiverjs/node-archiver).  
 Currently this package supports only creating zip with traditional PKWARE encryption.
 
 ## Install
