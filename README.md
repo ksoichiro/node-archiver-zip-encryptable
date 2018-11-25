@@ -2,6 +2,8 @@
 
 > An extension for archiver to zip with password encryption.
 
+[![Build Status](https://travis-ci.org/ksoichiro/node-archiver-zip-encryptable.svg?branch=master)](https://travis-ci.org/ksoichiro/node-archiver-zip-encryptable)
+
 Currently this package supports only creating zip with traditional PKWARE encryption.
 
 ## Install
