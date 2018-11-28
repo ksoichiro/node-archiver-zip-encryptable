@@ -31,9 +31,15 @@
     "node-int64": "^0.4.0"
   },
   "devDependencies": {
-    "eslint": "^5.9.0"
+    "chai": "^4.2.0",
+    "eslint": "^5.9.0",
+    "mocha": "^5.2.0",
+    "npm-run-all": "^4.1.5",
+    "temp": "^0.8.3"
   },
   "scripts": {
-    "test": "eslint **/*.js"
+    "test:lint": "eslint **/*.js",
+    "test:unit": "mocha",
+    "test": "npm-run-all test:*"
   }
 }
