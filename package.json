@@ -28,6 +28,7 @@
   ],
   "dependencies": {
     "archiver": "^3.0.0",
+    "crypto-random-string": "^1.0.0",
     "node-int64": "^0.4.0"
   },
   "devDependencies": {
