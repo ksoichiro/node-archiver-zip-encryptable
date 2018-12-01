@@ -95,4 +95,17 @@ describe('archive', function() {
     archive.append(Buffer.from('Hello World'), { name: 'test.txt' });
     archive.finalize();
   });
+
+  it('abort and unpipe', function(done) {
+    var tempDir = temp.mkdirSync('out');
+    var output = fs.createWriteStream(tempDir + '/example.zip');
+    output.on('close', function() {
+      done();
+    });
+
+    var archive = archiver('zip-encryptable');
+    archive.pipe(output);
+    archive.append(Buffer.from('Hello World'), { name: 'test.txt' });
+    archive.abort();
+  });
 });
