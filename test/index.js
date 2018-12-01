@@ -4,6 +4,8 @@ var path = require('path');
 var mkdirp = require('mkdirp');
 var temp = require('temp').track();
 var archiver = require('archiver');
+var readline = require("readline");
+var PassThrough = require('stream').PassThrough;
 archiver.registerFormat('zip-encryptable', require('../'));
 
 describe('archive', function() {
@@ -107,5 +109,34 @@ describe('archive', function() {
     archive.pipe(output);
     archive.append(Buffer.from('Hello World'), { name: 'test.txt' });
     archive.abort();
+  });
+
+  it('archive file with stream', function(done) {
+    var tempDir = temp.mkdirSync('out');
+    var output = fs.createWriteStream(tempDir + '/example.zip');
+    output.on('close', function() {
+      var content = fs.readFileSync(tempDir + '/example.zip');
+      expect(content.slice(0, 4)).to.eql(Buffer.from([0x50, 0x4b, 0x03, 0x04]));
+      done();
+    });
+
+    var archive = archiver('zip-encryptable', {
+        leve: 9,
+        password: 'test'
+    });
+    archive.pipe(output);
+
+    // read file and write line by line
+    var stream = fs.createReadStream('README.md', 'utf8');
+    var reader = readline.createInterface({ input: stream });
+    var pass = new PassThrough();
+    reader.on('line', function(data) {
+      pass.write(data + '\n');
+    });
+    reader.on('close', function() {
+      pass.end();
+    });
+    archive.append(pass, { name: 'README.md' });
+    archive.finalize();
   });
 });
