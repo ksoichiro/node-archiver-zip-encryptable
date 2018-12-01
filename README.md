@@ -3,6 +3,7 @@
 > An extension for archiver to zip with password encryption.
 
 [![Build Status](https://travis-ci.org/ksoichiro/node-archiver-zip-encryptable.svg?branch=master)](https://travis-ci.org/ksoichiro/node-archiver-zip-encryptable)
+[![Coverage Status](https://coveralls.io/repos/github/ksoichiro/node-archiver-zip-encryptable/badge.svg?branch=master)](https://coveralls.io/github/ksoichiro/node-archiver-zip-encryptable?branch=master)
 
 This extension adds some formats to handle encryption to [archiver](https://github.com/archiverjs/node-archiver).  
 Currently this package supports only creating zip with traditional PKWARE encryption.
