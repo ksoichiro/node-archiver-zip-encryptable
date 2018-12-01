@@ -33,14 +33,17 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "coveralls": "^3.0.2",
     "eslint": "^5.9.0",
     "mocha": "^5.2.0",
     "npm-run-all": "^4.1.5",
+    "nyc": "^13.1.0",
     "temp": "^0.8.3"
   },
   "scripts": {
     "test:lint": "eslint **/*.js",
-    "test:unit": "mocha",
-    "test": "npm-run-all test:*"
+    "test:unit": "nyc mocha",
+    "test": "npm-run-all test:*",
+    "report": "nyc report --reporter=text-lcov"
   }
 }
