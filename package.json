@@ -44,6 +44,6 @@
     "test:lint": "eslint **/*.js",
     "test:unit": "nyc mocha",
     "test": "npm-run-all test:*",
-    "report": "nyc report --reporter=text-lcov"
+    "report": "nyc report --reporter=html --report-dir=.coverage"
   }
 }
