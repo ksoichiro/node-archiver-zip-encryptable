@@ -1,6 +1,15 @@
 {
-    "extends": "eslint:recommended",
-    "env": {
-      "node": true
-    }
+  "extends": ["eslint:recommended", "prettier"],
+  "plugins": ["prettier"],
+  "env": {
+    "node": true
+  },
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true
+      }
+    ]
+  }
 }

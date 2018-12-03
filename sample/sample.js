@@ -6,9 +6,9 @@ archiver.registerFormat('zip-encryptable', require('archiver-zip-encryptable'));
 var output = fs.createWriteStream(__dirname + '/example.zip');
 
 var archive = archiver('zip-encryptable', {
-    zlib: { level: 9 },
-    forceLocalTime: true,
-    password: 'test'
+  zlib: { level: 9 },
+  forceLocalTime: true,
+  password: 'test'
 });
 archive.pipe(output);
 
