@@ -1,6 +1,6 @@
 {
   "name": "archiver-zip-encryptable",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An extension for archiver to zip with password encryption.",
   "license": "MIT",
   "repository": {
