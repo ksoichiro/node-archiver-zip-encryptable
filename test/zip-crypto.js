@@ -14,13 +14,16 @@ describe('zip-crypto', function() {
 
   describe('#_updateKeys()', function() {
     // https://github.com/ksoichiro/node-archiver-zip-encryptable/issues/1
-    it('throws error with big number', function() {
+    it('updates keys with big number successfully', function() {
       var zipCrypto = new ZipCrypto({ password: 's3cret' });
       zipCrypto.init();
       zipCrypto.keys[1] = Buffer.from([0xff, 0xff, 0xff, 0xff]);
       expect(function() {
         zipCrypto._updateKeys(Buffer.from([0x1]));
-      }).to.throw();
+      }).to.not.throw();
+      expect(zipCrypto.keys[0]).to.eql(Buffer.from([0xee, 0x64, 0x9b, 0xf2]));
+      expect(zipCrypto.keys[1]).to.eql(Buffer.from([0x90, 0x04, 0x48, 0xb6]));
+      expect(zipCrypto.keys[2]).to.eql(Buffer.from([0x81, 0x9f, 0xee, 0xae]));
     });
   });
 });
