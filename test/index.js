@@ -130,7 +130,7 @@ describe('archive', function() {
     });
 
     var archive = archiver('zip-encryptable', {
-      leve: 9,
+      level: 9,
       password: 'test'
     });
     archive.pipe(output);
