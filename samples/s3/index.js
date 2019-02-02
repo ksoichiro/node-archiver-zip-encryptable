@@ -15,19 +15,18 @@ exports.handler = async (event) => {
     require('archiver-zip-encryptable')
   );
 
-  var getObject = function(key) {
-    return s3.getObject({ Bucket: bucket, Key: key }).promise();
-  };
-
   var passThrough = new PassThrough();
   var archive = archiver('zip-encryptable', {
     password: password
   });
   archive.pipe(passThrough);
   for (var i = 1; i <= 20; i++) {
-    archive.append((await getObject('test1.txt')).Body.toString(), {
-      name: `test${i}.txt`
-    });
+    archive.append(
+      s3.getObject({ Bucket: bucket, Key: 'test1.txt' }).createReadStream(),
+      {
+        name: `test${i}.txt`
+      }
+    );
   }
   archive.finalize();
 

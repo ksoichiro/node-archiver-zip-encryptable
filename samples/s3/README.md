@@ -43,11 +43,11 @@ sh archive.sh
    Response:
    null
    Request ID:
-   "6222078d-26bf-44ba-8bc3-bf426660ec14"
+   "76d755ab-d4b1-43aa-9869-59cbec9e23a2"
    Function Logs:
-   START RequestId: 6222078d-26bf-44ba-8bc3-bf426660ec14 Version: \$LATEST
-   END RequestId: 6222078d-26bf-44ba-8bc3-bf426660ec14
-   REPORT RequestId: 6222078d-26bf-44ba-8bc3-bf426660ec14 Duration: 22283.54 ms Billed Duration: 22300 ms Memory Size: 1024 MB Max Memory Used: 344 MB
+   START RequestId: 76d755ab-d4b1-43aa-9869-59cbec9e23a2 Version: \$LATEST
+   END RequestId: 76d755ab-d4b1-43aa-9869-59cbec9e23a2
+   REPORT RequestId: 76d755ab-d4b1-43aa-9869-59cbec9e23a2 Duration: 22321.15 ms Billed Duration: 22400 ms Memory Size: 1024 MB Max Memory Used: 238 MB
    ```
 
 1. A zip file like `result-1549077941879.zip` should be created on your bucket.
