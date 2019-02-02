@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "dependencies": {
+    "archiver-zip-encryptable": "git+https://github.com/ksoichiro/node-archiver-zip-encryptable.git#master"
+  }
+}
