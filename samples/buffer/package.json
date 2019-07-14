@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "dependencies": {
+    "archiver-zip-encryptable": "file:../.."
+  }
+}
