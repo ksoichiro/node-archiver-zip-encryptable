@@ -346,4 +346,137 @@ describe('archive', function() {
     archive.append(pass, { name: 'README.md' });
     archive.finalize();
   });
+
+  it('archive empty file', function(done) {
+    var tempDir = temp.mkdirSync('out');
+    var output = fs.createWriteStream(tempDir + '/example.zip');
+    output.on('close', function() {
+      var content = fs.readFileSync(tempDir + '/example.zip');
+      // Encrypted file size
+      expect(content.length).to.equal(144);
+      // Local file header 1
+      {
+        // Signature
+        expect(slice(content, 0, 4).readUInt32LE()).to.equal(0x04034b50);
+        // Version needed to extract
+        expect(slice(content, 4, 2).readUInt16LE()).to.equal(20);
+        // General purpose bit flag: 9 = Bit 0 and Bit 3
+        // Bit 0: the file is encrypted.
+        // Bit 3: the fields crc-32, compressed size and
+        // uncompressed size are set to zero in the local header.
+        // The correct values are put in the data descriptor.
+        expect(slice(content, 6, 2).readUInt16LE()).to.equal(9);
+        // Compression method: 0 - The file is stored (no compression)
+        expect(slice(content, 8, 2).readUInt16LE()).to.equal(0);
+        // Last mod file time: 2B
+        // Last mod file date: 2B
+        // Crc-32
+        expect(slice(content, 14, 4).readUInt32LE()).to.equal(0);
+        // Compressed size: 0 (because General purpose bit 3 is set)
+        expect(slice(content, 18, 4).readUInt32LE()).to.equal(0);
+        // Uncompressed size: 0 (because General purpose bit 3 is set)
+        expect(slice(content, 22, 4).readUInt32LE()).to.equal(0);
+        // File name length: 0 (because General purpose bit 3 is set)
+        expect(slice(content, 26, 4).readUInt16LE()).to.equal(
+          'blank.txt'.length
+        );
+        // Extra field length
+        expect(slice(content, 28, 2).readUInt16LE()).to.equal(0);
+        // File name
+        expect(slice(content, 30, 'blank.txt'.length).toString('ascii')).to.eql(
+          'blank.txt'
+        );
+      }
+      // Encryption header 1: 12B, 39 ~ 50
+      // File data 1: does not exist
+      // Data descriptor 1
+      {
+        // Signature
+        expect(slice(content, 51, 4).readUInt32LE()).to.equal(0x08074b50);
+        // Crc-32
+        expect(slice(content, 55, 4)).to.eql(bytes([0, 0, 0, 0]));
+        // Compressed size
+        expect(slice(content, 59, 4).readUInt32LE()).to.equal(12);
+        // Uncompressed size
+        expect(slice(content, 63, 4).readUInt32LE()).to.equal(0);
+      }
+      // Archive decryption header: does not exist
+      // Archive extra data record: does not exist
+      // Central directory header 1
+      {
+        // Central file header signature
+        expect(slice(content, 67, 4).readUInt32LE()).to.equal(0x02014b50);
+        // Version made by
+        expect(slice(content, 71, 1).readInt8()).to.equal(45); // 4.5
+        // expect(slice(content, 72, 1)).to.eql(bytes([0x03])); // UNIX
+        // Version needed to extract
+        expect(slice(content, 73, 2).readUInt16LE()).equal(20);
+        // General purpose bit flag
+        expect(slice(content, 75, 2).readUInt16LE()).equal(9);
+        // Compression method
+        expect(slice(content, 77, 2).readUInt16LE()).equal(0);
+        // Last mod file time: 2B
+        // Last mod file date: 2B
+        // Crc-32
+        expect(slice(content, 83, 4)).to.eql(bytes([0, 0, 0, 0]));
+        // Compressed size
+        expect(slice(content, 87, 4).readUInt32LE()).equal(12);
+        // Uncompressed size
+        expect(slice(content, 91, 4).readUInt32LE()).equal(0);
+        // File name length
+        expect(slice(content, 95, 2).readUInt16LE()).to.equal(
+          'blank.txt'.length
+        );
+        // Extra field length
+        expect(slice(content, 97, 2).readUInt16LE()).equal(0);
+        // File comment length
+        expect(slice(content, 99, 2).readUInt16LE()).equal(0);
+        // Disk number start
+        expect(slice(content, 101, 2).readUInt16LE()).equal(0);
+        // Internal file attributes
+        expect(slice(content, 103, 2).readUInt16LE()).equal(0);
+        // External file attributes: host-system dependent
+        // expect(slice(content, 105, 4).readUInt32LE()).equal(0);
+        // Relative offset of local header 4 bytes
+        expect(slice(content, 109, 4).readUInt32LE()).equal(0);
+        // File name
+        expect(
+          slice(content, 113, 'blank.txt'.length).toString('ascii')
+        ).to.eql('blank.txt');
+        // Extra field: does not exists
+        // File comment: does not exists
+      }
+      // End of central directory record
+      {
+        // End of central dir signature
+        expect(slice(content, 122, 4).readUInt32LE()).to.equal(0x06054b50);
+        // Number of this disk
+        expect(slice(content, 126, 2).readUInt16LE()).to.equal(0);
+        // Number of the disk with the start of the central directory
+        expect(slice(content, 128, 2).readUInt16LE()).to.equal(0);
+        // Total number of entries in the central directory on this disk
+        expect(slice(content, 130, 2).readUInt16LE()).to.equal(1);
+        // Total number of entries in the central directory
+        expect(slice(content, 132, 2).readUInt16LE()).to.equal(1);
+        // Size of the central directory
+        expect(slice(content, 134, 4).readUInt32LE()).to.equal(55);
+        // Offset of start of central directory with respect to the starting disk number
+        expect(slice(content, 138, 4).readUInt32LE()).to.equal(67);
+        // .ZIP file comment length
+        expect(slice(content, 142, 2).readUInt16LE()).to.equal(0);
+        // .ZIP file comment: does not exist
+      }
+      done();
+    });
+
+    var archive = archiver('zip-encryptable', {
+      zlib: { level: 9 },
+
+      forceLocalTime: true,
+      password: 'test'
+    });
+    archive.pipe(output);
+    archive.append(Buffer.from(''), { name: 'blank.txt' });
+    archive.finalize();
+  });
 });
