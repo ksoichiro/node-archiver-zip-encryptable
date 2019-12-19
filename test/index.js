@@ -708,4 +708,29 @@ describe('archive', function() {
     archive.append(Buffer.from(''), { name: 'blank.txt' });
     archive.finalize();
   });
+
+  it('archive directory', function(done) {
+    var cwd = process.cwd();
+    var tempDir = temp.mkdirSync('out');
+    var sample2Dir = path.join(tempDir, 'sample', 'sample2');
+    mkdirp.sync(sample2Dir);
+    fs.writeFileSync(path.join(sample2Dir, 'test.txt'), 'abc');
+    var output = fs.createWriteStream(tempDir + '/example.zip');
+    output.on('close', function() {
+      process.chdir(cwd);
+      var content = fs.readFileSync(tempDir + '/example.zip');
+      expect(content.slice(0, 4)).to.eql(Buffer.from([0x50, 0x4b, 0x03, 0x04]));
+      done();
+    });
+
+    var archive = archiver('zip-encryptable', {
+      level: 9,
+      password: 'test'
+    });
+    archive.pipe(output);
+
+    process.chdir(tempDir);
+    archive.directory('sample/', true);
+    archive.finalize();
+  });
 });
