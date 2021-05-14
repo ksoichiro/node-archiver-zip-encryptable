@@ -49,8 +49,8 @@
   "scripts": {
     "test:lint": "eslint --fix **/*.js",
     "test:unit": "nyc mocha",
-    "test": "npm-run-all test:*",
-    "report": "nyc report --reporter=html --report-dir=.coverage"
+    "test": "npm-run-all test:* report",
+    "report": "nyc report --reporter=lcov --report-dir=.coverage"
   },
   "husky": {
     "hooks": {

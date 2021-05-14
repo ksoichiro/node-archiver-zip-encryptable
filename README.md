@@ -2,7 +2,7 @@
 
 > An extension for archiver to zip with password encryption.
 
-[![Travis master](https://img.shields.io/travis/ksoichiro/node-archiver-zip-encryptable/master.svg?style=flat-square)](https://travis-ci.org/ksoichiro/node-archiver-zip-encryptable)
+[![GitHub Actions master](https://img.shields.io/github/workflow/status/ksoichiro/node-archiver-zip-encryptable/main/master.svg?logo=github&style=flat-square)](https://travis-ci.org/ksoichiro/node-archiver-zip-encryptable)
 [![AppVeyor master](https://img.shields.io/appveyor/ci/ksoichiro/node-archiver-zip-encryptable/master.svg?logo=appveyor&style=flat-square)](https://ci.appveyor.com/project/ksoichiro/node-archiver-zip-encryptable)
 [![Coveralls master](https://img.shields.io/coveralls/ksoichiro/node-archiver-zip-encryptable/master.svg?style=flat-square&maxAge=2592000)](https://coveralls.io/github/ksoichiro/node-archiver-zip-encryptable)
 [![npm](https://img.shields.io/npm/v/archiver-zip-encryptable.svg?style=flat-square)](https://www.npmjs.com/package/archiver-zip-encryptable)
