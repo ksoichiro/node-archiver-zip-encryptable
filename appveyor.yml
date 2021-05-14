@@ -5,7 +5,7 @@ branches:
 
 environment:
   matrix:
-    - nodejs_version: 'latest'
+    - nodejs_version: 'Current'
     - nodejs_version: '14'
     - nodejs_version: '12'
 
